@@ -1,4 +1,6 @@
-
 <?php
-// require_once VIEWS.'/contact/index.php';
-render('/contact/index');
+$address = conf('contacts');
+// var_dump($address);
+
+// render('/contact/index', ['address' => $address]);
+render('/contact/index', ['address' => $address]);
