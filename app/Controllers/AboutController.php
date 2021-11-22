@@ -1,3 +1,11 @@
 <?php
-// require_once VIEWS.'/about/index.php';
-render('/about/index');
+
+class AboutController
+{
+    public function __construct(){
+        // render('/about/index');
+    }
+    public function index(){
+        render('/about/index');
+    }
+}

@@ -40,11 +40,11 @@ function sendHeaders($status=200, $headers=[]){
     }
 }
 
-function render($view, $params=null){
+function render($view, $params=null, $layout='app'){
     sendHeaders();
     ob_start();
     $content = view($view, $params);
-    require_once VIEWS.'/layouts/app.php';
+    require_once VIEWS."/layouts/${layout}.php";
     echo str_replace('{{content}}', $content, ob_get_clean());
 }
 
@@ -69,18 +69,22 @@ $result = false;
 
 function getController($path){
     $segments = explode('\\', $path);
-    $controller = array_pop($segments);
+    $segment = array_pop($segments);
+    list($controller, $method) = explode('@', $segment);
     $segments = array_pop($segments);
     $segments = $segments ? "/${segments}" : '';
-    return [$segments, $controller];
+    return [$segments, $controller, $method];
 }
 
 foreach ($routes as $route => $path){
     if ($route == uri()){
-        list($segment, $controller) = getController($path);
+        list($segment, $controller, $method) = getController($path);
         $controllerPath = CONTROLLERS."${segment}/${controller}.php";
         if(file_exists($controllerPath)){
+            // var_dump($method);
             include_once($controllerPath);
+            $controller = new $controller();
+            $controller->$method();
             $result = true;
             break;
         }
