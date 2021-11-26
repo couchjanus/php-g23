@@ -1,22 +1,15 @@
 <?php
 
-class MyClass
-{
-    public $prop;
-    protected $protProp;
-    private $privateProp;
-}
+// $url = 'admin/categories/edit/7777';
+$url = 'admin/brands/edit/555';
+$key = 'admin/brands/edit/{id}';
 
-$my = new MyClass;
-$my->prop = 77;
-// $my->protProp = "It's protected";
-// $my->privateProp = "It's private";
-var_dump($my);
-$my1 = new MyClass;
+// $pattern = '%^admin/categories/edit/(?<id>[0-9]+)$%';
+// $pattern = '%^[^\s]+/(?<id>[0-9]+)$%';
+// $result = preg_match($pattern, $url, $matches);
 
-$my1->prop = 775;
-if ($my == $my1){
-    echo "It's eqw";
-}else{
-    echo "It's not eqw";
-}
+$pattern = '%^'.preg_replace('/{([^\s]+)}/', '(?<$1>[0-9]+)', $key).'$%';
+
+$result = preg_match($pattern, $url, $matches);
+
+var_dump($result, $matches);

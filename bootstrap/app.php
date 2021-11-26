@@ -1,10 +1,9 @@
 <?php
 define('ROOT', dirname(__DIR__));
-
-// echo ROOT;
 const CONTROLLERS = ROOT.'/app/Controllers';
 const VIEWS = ROOT.'/app/Views';
 const CONFIG = ROOT.'/config';
+define('ROUTES', require_once CONFIG.'/routes.php');
 
 function uri(){
     $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -63,35 +62,9 @@ function conf($mix){
     return json_decode($json, True);
 }
 
-$routes = require_once CONFIG.'/routes.php';
 
-$result = false;
+require_once ROOT.'/core/Router.php';
 
-function getController($path){
-    $segments = explode('\\', $path);
-    $segment = array_pop($segments);
-    list($controller, $method) = explode('@', $segment);
-    $segments = array_pop($segments);
-    $segments = $segments ? "/${segments}" : '';
-    return [$segments, $controller, $method];
-}
+$router = new Router();
+$router->run();
 
-foreach ($routes as $route => $path){
-    if ($route == uri()){
-        list($segment, $controller, $method) = getController($path);
-        $controllerPath = CONTROLLERS."${segment}/${controller}.php";
-        if(file_exists($controllerPath)){
-            // var_dump($method);
-            include_once($controllerPath);
-            $controller = new $controller();
-            $controller->$method();
-            $result = true;
-            break;
-        }
-    }
-}
-
-if(!$result){
-    sendHeaders(404);
-    echo "<h1>404: OOPS, Page not found!</h1>";
-}

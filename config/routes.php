@@ -4,7 +4,8 @@ return [
     '' => 'HomeController@index',
     'about' => 'AboutController@index',
     'contact' => 'ContactController',
-
+    'error' => 'ErrorController@index',
+    
     'admin' => 'Admin\DashboardController@index',
     'admin/contact' => 'Admin\ContactController',
     'admin/brands' => 'Admin\BrandController@index',
@@ -13,5 +14,8 @@ return [
     'admin/categories' => 'Admin\CategoryController@index',
     'admin/categories/create' => 'Admin\CategoryController@create',
     'admin/categories/store' => 'Admin\CategoryController@store',
+
+    'admin/categories/edit/{id}' => 'Admin\CategoryController@edit',
+    'admin/categories/delete/{id}' => 'Admin\CategoryController@delete',
   
 ];

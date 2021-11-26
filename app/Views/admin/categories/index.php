@@ -16,7 +16,10 @@
               <td><?=$category->id?></td>
               <td><?=$category->name?></td>
               <td><?=$category->status?></td>
-              <td>placeholder</td>
+              <td>
+                    <a href="/admin/categories/edit/<?=$category->id?>"><buttom class="btn btn-warning">Edit</buttom></a>
+                    <a href="/admin/categories/delete/<?=$category->id?>"><buttom class="btn btn-danger">Delete</buttom></a>
+              </td>
              
             </tr>
         <?php endforeach  ?>  
