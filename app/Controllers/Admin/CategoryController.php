@@ -1,5 +1,6 @@
 <?php
 require_once ROOT.'/core/Connection.php';
+require_once ROOT."/app/Models/Category.php";
 
 class CategoryController
 {
@@ -9,12 +10,7 @@ class CategoryController
     }
 
     public function index(){
-        $db = new Connection();
-        $sql = "SELECT * FROM categories";
-        $stmt = $db->pdo->prepare($sql);
-        $stmt->execute();
-        $categories = $stmt->fetchAll();
-        
+        $categories = (new Category())->all();
         render('/admin/categories/index', ['categories' => $categories], 'admin');
     }
 

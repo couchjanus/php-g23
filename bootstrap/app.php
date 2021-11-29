@@ -62,7 +62,14 @@ function conf($mix){
     return json_decode($json, True);
 }
 
+require_once ROOT.'/core/Connection.php';
+require_once ROOT.'/core/Entity.php';
 
+// $brand = new Brand();
+// $brand->id = 2;
+// $brand->name = "Foo brand";
+// $brand->description = "New Foo brand desxription";
+// $brand->save();
 require_once ROOT.'/core/Router.php';
 
 $router = new Router();

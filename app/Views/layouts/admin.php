@@ -52,6 +52,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/admin/brands">
+              <span data-feather="file"></span>
+              Brands
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file"></span>
               Orders
