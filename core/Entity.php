@@ -1,4 +1,5 @@
 <?php 
+require_once ROOT.'/core/Connection.php';
 
 abstract class Entity 
 {
@@ -6,12 +7,12 @@ abstract class Entity
 
     public function __construct()
     {
-        $this->connection = new Connection();
+        $this->connection = Connection::connect();
     }
 
     private function next(){
         $sql = "SELECT max(id) as maxId FROM ".$this->tableName;
-        $stmt = $this->connection->pdo->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch();
         return $result->maxId + 1;
@@ -19,14 +20,14 @@ abstract class Entity
 
     public function all(){
         $sql = "SELECT * FROM ".$this->tableName;
-        $stmt = $this->connection->pdo->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     public function getById($id){
         $sql = "SELECT * FROM " . $this->tableName . " WHERE id = " . $id;
-        $stmt = $this->connection->pdo->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
     }
@@ -51,7 +52,7 @@ abstract class Entity
             $sql = "INSERT INTO ".$this->tableName." SET ".$setValues.", id = ".$this->next();
         }
 
-        $stmt = $this->connection->pdo->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         return $stmt->execute();
     }
 }

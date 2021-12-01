@@ -2,22 +2,25 @@
 
 class Connection
 {
-    public $pdo;
+    protected static $config = [];
+    protected static $instance;
 
-    protected $config = [];
-
-    public function __construct()
+    protected function __construct()
     {
-        $this->config = require_once ROOT.'/config/db.php';
-        $dsn = $this->makeDsn($this->config['db']);
-        try {
-            $this->pdo = new PDO($dsn, $this->config['user'], $this->config['password'], $this->config['options']);
-        } catch (PDOException $e){
-            throw new PDOException($e->geyMessage(), (int) $e->getCode());
-        }
     }
 
-    private function makeDsn($config){
+    public static function connect()
+    {
+        self::$config = require_once ROOT.'/config/db.php';
+        if(!self::$instance){
+            $dsn = self::makeDsn(self::$config['db']);
+            self::$instance = new PDO($dsn, self::$config['user'], self::$config['password'], self::$config['options']);
+        }
+        return self::$instance;
+      
+    }
+
+    private static function makeDsn($config){
         $dsn = $config['driver'] . ':';
         unset($config['driver']);
         foreach ($config as $key => $value){

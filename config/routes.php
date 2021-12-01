@@ -12,6 +12,9 @@ return [
     'admin/brands/create' => 'Admin\BrandController@create',
     'admin/brands/edit/{id}' => 'Admin\BrandController@edit',
 
+    'admin/products' => 'Admin\ProductController@index',
+    'admin/products/create' => 'Admin\ProductController@create',
+
     'admin/categories' => 'Admin\CategoryController@index',
     'admin/categories/create' => 'Admin\CategoryController@create',
     'admin/categories/store' => 'Admin\CategoryController@store',

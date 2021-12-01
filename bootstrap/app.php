@@ -5,6 +5,8 @@ const VIEWS = ROOT.'/app/Views';
 const CONFIG = ROOT.'/config';
 define('ROUTES', require_once CONFIG.'/routes.php');
 
+define('STORAGE', $_SERVER['DOCUMENT_ROOT'].'/storage');
+
 function uri(){
     $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
     return trim($uri, '/') ?? '';
@@ -62,7 +64,7 @@ function conf($mix){
     return json_decode($json, True);
 }
 
-require_once ROOT.'/core/Connection.php';
+
 require_once ROOT.'/core/Entity.php';
 
 // $brand = new Brand();
