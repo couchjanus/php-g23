@@ -12,6 +12,9 @@
 <?php require_once VIEWS.'/layouts/nav.php';?>
 {{content}}
 <?php require_once VIEWS.'/layouts/footer.php';?>
+<!--  Modal -->
+
+<div class="modal-window"></div>
 <script src="/js/app.js"></script>
 </body>
 </html>

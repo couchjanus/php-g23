@@ -25,6 +25,12 @@ abstract class Entity
         return $stmt->fetchAll();
     }
 
+    public function runSql($sql){
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public function getById($id){
         $sql = "SELECT * FROM " . $this->tableName . " WHERE id = " . $id;
         $stmt = $this->connection->prepare($sql);

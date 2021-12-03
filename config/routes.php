@@ -21,5 +21,9 @@ return [
 
     'admin/categories/edit/{id}' => 'Admin\CategoryController@edit',
     'admin/categories/delete/{id}' => 'Admin\CategoryController@delete',
-  
+
+    'api/categories' => 'HomeController@getCategories',
+    'api/products' => 'HomeController@getProducts',
+    'api/products/{id}' => 'HomeController@getProductsByCategory',
+    
 ];

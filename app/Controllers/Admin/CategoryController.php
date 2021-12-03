@@ -14,7 +14,36 @@ class CategoryController
         render('/admin/categories/index', ['categories' => $categories], 'admin');
     }
 
+    private function fileName($name){
+        return  sha1(mt_rand(1, 9999).$name.uniqid()).time();
+    }
+
+
+    private function upload($data){
+        if(!empty($data['cover'])){
+            $fileName = $this->fileName($data['cover']['name']);
+            if(move_uploaded_file($data['cover']['tmp_name'], STORAGE.'/categories/'.$fileName)){
+                return "http://".$_SERVER['HTTP_HOST'].'/storage/categories/'.$fileName;
+            }
+
+        }
+    }
+
     public function create(){
+        if($_POST){
+            $category = new Category();
+            $category->name = $_POST['name'];
+            
+            $category->status = isset($_POST['status'])?1:0;
+
+            $category->cover = $this->upload($_FILES);
+
+            if($category->save()){
+                $redirect = "http://".$_SERVER['HTTP_HOST'].'/admin/categories';
+                header("LOcation: $redirect");
+                exit();
+            }
+        }
         render('/admin/categories/create', [], 'admin');
     }
 

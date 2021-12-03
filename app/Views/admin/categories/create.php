@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Create New Category</h4>
-        <form class="needs-validation" novalidate method="POST" action="/admin/categories/store">
+        <form class="needs-validation" novalidate method="POST" action="" enctype="multipart/form-data">
           <div class="row g-3">
            
             <div class="col-12">
@@ -37,7 +37,7 @@
               <div class="input-group has-validation">
                
                 <input type="text" class="form-control" id="categoryname" placeholder="Category name" required name="name">
-              <div class="invalid-feedback">
+                <div class="invalid-feedback">
                     Category name is required.
                 </div>
               </div>
@@ -51,6 +51,11 @@
             <label class="form-check-label" for="status">Active</label>
           </div>
           <hr class="my-4">
+          <div class="col-12">
+              <label class="form-label">Choose the file: </label>
+              <input type="file" class="form-control" name="cover">
+            </div>
+            <hr class="my-4">
 
           <button class="w-100 btn btn-primary btn-lg" type="submit">Create new category</button>
         </form>
