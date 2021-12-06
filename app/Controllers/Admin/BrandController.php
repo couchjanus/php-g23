@@ -1,29 +1,32 @@
 <?php
 require_once ROOT."/app/Models/Brand.php";
+require_once ROOT."/core/Controller.php";
 
-class BrandController
+class BrandController extends Controller
 {
+    protected static string $layout = 'admin';
+
     public function __construct(){    
-        // echo "BrandController Constructor";
+        parent::__construct();
+        // 
     }
 
     public function index(){
         $brands = (new Brand())->all();
-        render('/admin/brands/index', compact('brands'), 'admin');
+        $this->response->render('/admin/brands/index', compact('brands'));
     }
 
     public function create(){
-        if($_POST){
-            $brand = new Brand();
-            $brand->name = $_POST['name'];
-            $brand->description = $_POST['description'];
-            if($brand->save()){
-                $redirect = "http://".$_SERVER['HTTP_HOST'].'/admin/brands';
-                header("LOcation: $redirect");
-                exit();
-            }
+        $this->response->render('/admin/brands/create', []);
+    }
+
+    public function store(){
+        $brand = new Brand();
+        $brand->name = $this->request->name;
+        $brand->description = $this->request->description;
+        if($brand->save()){
+            $this->response->redirect('/admin/brands');
         }
-        render('/admin/brands/create', [], 'admin');
     }
 
     public function edit($params){

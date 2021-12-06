@@ -10,6 +10,7 @@ return [
     'admin/contact' => 'Admin\ContactController',
     'admin/brands' => 'Admin\BrandController@index',
     'admin/brands/create' => 'Admin\BrandController@create',
+    'admin/brands/store' => 'Admin\BrandController@store',
     'admin/brands/edit/{id}' => 'Admin\BrandController@edit',
 
     'admin/products' => 'Admin\ProductController@index',

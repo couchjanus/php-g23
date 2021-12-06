@@ -1,9 +1,13 @@
 <?php
 require_once ROOT.'/core/Connection.php';
 require_once ROOT."/app/Models/Category.php";
+require_once ROOT.'/core/Upload.php';
+require_once ROOT.'/core/Controller.php';
 
-class CategoryController
+class CategoryController extends Controller
 {
+    use Upload;
+
     public function __construct(){
         
         // echo "BrandController Constructor";
@@ -14,51 +18,24 @@ class CategoryController
         render('/admin/categories/index', ['categories' => $categories], 'admin');
     }
 
-    private function fileName($name){
-        return  sha1(mt_rand(1, 9999).$name.uniqid()).time();
-    }
-
-
-    private function upload($data){
-        if(!empty($data['cover'])){
-            $fileName = $this->fileName($data['cover']['name']);
-            if(move_uploaded_file($data['cover']['tmp_name'], STORAGE.'/categories/'.$fileName)){
-                return "http://".$_SERVER['HTTP_HOST'].'/storage/categories/'.$fileName;
-            }
-
-        }
-    }
 
     public function create(){
-        if($_POST){
-            $category = new Category();
-            $category->name = $_POST['name'];
-            
-            $category->status = isset($_POST['status'])?1:0;
-
-            $category->cover = $this->upload($_FILES);
-
-            if($category->save()){
-                $redirect = "http://".$_SERVER['HTTP_HOST'].'/admin/categories';
-                header("LOcation: $redirect");
-                exit();
-            }
-        }
-        render('/admin/categories/create', [], 'admin');
+       
+        $this->response->render('/admin/categories/create', []);
     }
 
     public function store(){
-        $db = new Connection();
-        $status = $_POST['status'] ? 1:0;
-        $data = [$_POST['name'], $status];
+        
+            $category = new Category();
+            $category->name = $this->request->name;
+            
+            $category->status = isset($this->request->status)?1:0;
 
-        $sql = "INSERT INTO categories (name, status) VALUES (?, ?)";
-        $stmt = $db->pdo->prepare($sql);
+            $category->cover = $this->upload($this->request->cover);
 
-        if ($stmt->execute($data)){
-            $redirect = "http://".$_SERVER['HTTP_HOST'].'/admin/categories';
-            header("Location: $redirect");
-        }
+            if($category->save()){
+                $this->response->redirect('/admin/categories');
+            }
     }
 
     public function edit($params){

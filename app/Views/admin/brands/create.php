@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Create New brand</h4>
-        <form class="needs-validation" novalidate method="POST" action="">
+        <form class="needs-validation" novalidate method="POST" action="/admin/brands/store">
           <div class="row g-3">
            
               <div class="col-12">
