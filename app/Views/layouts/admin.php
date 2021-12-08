@@ -138,7 +138,7 @@
           </button>
         </div>
       </div>
-
+      <?php require_once VIEWS.'/layouts/flash-message.php';?>
       {{content}}
 
      

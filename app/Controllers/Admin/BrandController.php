@@ -25,7 +25,10 @@ class BrandController extends Controller
         $brand->name = $this->request->name;
         $brand->description = $this->request->description;
         if($brand->save()){
+            $this->request->session()->setFlash('success', 'Brand created successfully!');
             $this->response->redirect('/admin/brands');
+        }else{
+            $this->request->session()->setFlash('danger', 'Some errors occurred!');
         }
     }
 
