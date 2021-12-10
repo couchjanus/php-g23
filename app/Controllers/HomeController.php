@@ -2,13 +2,17 @@
 require_once ROOT.'/app/Models/Category.php';
 require_once ROOT.'/app/Models/Product.php';
 
-class HomeController
+require_once ROOT."/core/Controller.php";
+
+class HomeController extends Controller
 {
+    protected static string $layout = 'app';
+
     public function __construct(){
-        // render('/home/index');
+        parent::__construct();
     }
     public function index(){
-        render('/home/index');
+        $this->response->render('/home/index');
     }
 
     public function getCategories()

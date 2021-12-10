@@ -38,6 +38,23 @@ abstract class Entity
         return $stmt->fetch();
     }
 
+    public function getWhere($options = []){
+        $sql = '';
+        $where = '';
+        $whereConditions = [];
+        if(!empty($options)){
+            foreach ($options as $key => $value){
+                $whereConditions[] = '`'.$key.'` = "'.$value.'"';
+            }
+            $where = " WHERE ".implode(' AND ', $whereConditions);
+        }
+        $sql = "SELECT * FROM " . $this->tableName . $where;
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+
     public function save()
     {
         $props = [];

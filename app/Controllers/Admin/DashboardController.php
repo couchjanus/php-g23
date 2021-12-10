@@ -1,9 +1,17 @@
 <?php
+require_once CONTROLLERS."/Admin/AdminController.php";
 
-class DashboardController
+class DashboardController extends AdminController
 {
+    // protected static string $layout = 'admin';
+
+    public function __construct(){    
+        parent::__construct();
+        // 
+    }
+
     public function index()
     {
-        render('/admin/index', ['title'=>"Admin Dashboard"], 'admin');
+        $this->response->render('admin/index', ['title'=>"Admin Dashboard"]);
     }
 }

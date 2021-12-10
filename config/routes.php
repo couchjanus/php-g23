@@ -23,6 +23,14 @@ return [
     'admin/categories/edit/{id}' => 'Admin\CategoryController@edit',
     'admin/categories/delete/{id}' => 'Admin\CategoryController@delete',
 
+    'register' => 'RegisterController@index',
+    'signup' => 'RegisterController@signup',
+
+    'login' => 'LoginController@index',
+    'signin' => 'LoginController@signin',
+    'logout' => 'LoginController@logout',
+    'profile' => 'ProfileController@index',
+    
     'api/categories' => 'HomeController@getCategories',
     'api/products' => 'HomeController@getProducts',
     'api/products/{id}' => 'HomeController@getProductsByCategory',

@@ -15,7 +15,7 @@
         <ul class="navbar-nav-right list-unstyled d-flex">
             <li class="nav-item"><a class="nav-link" href="cart.html"><i class="fas fa-dolly-flatbed"></i><span class="amount-items-in-cart">0</span></a></li>
             <li class="nav-item"><a class="nav-link" href="wishlist.html"><i class="far fa-heart"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-user"></i></a></li>
         </ul>
     </div>
 </nav>
