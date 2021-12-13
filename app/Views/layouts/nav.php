@@ -13,9 +13,11 @@
         </ol>
 
         <ul class="navbar-nav-right list-unstyled d-flex">
-            <li class="nav-item"><a class="nav-link" href="cart.html"><i class="fas fa-dolly-flatbed"></i><span class="amount-items-in-cart">0</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="wishlist.html"><i class="far fa-heart"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-user"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-dolly-flatbed"></i><span class="amount-items-in-cart">0</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/wishlist"><i class="far fa-heart"></i></a></li>
+            <li class="nav-item login"><a class="nav-link" href="/login"><i class="fas fa-user"></i></a></li>
+            <li class="nav-item profile"><a class="nav-link" href="/profile"><i class="fas fa-address-card"></i></a></li>
+            <li class="nav-item logout"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
 </nav>

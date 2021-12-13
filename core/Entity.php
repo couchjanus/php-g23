@@ -78,4 +78,11 @@ abstract class Entity
         $stmt = $this->connection->prepare($sql);
         return $stmt->execute();
     }
+
+    public function insert($sql, $params = []){    
+        $stmt = $this->connection->prepare($sql);
+        $result = $stmt->execute($params);
+        return $result;
+    }
+
 }

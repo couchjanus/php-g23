@@ -5,7 +5,7 @@ return [
     'about' => 'AboutController@index',
     'contact' => 'ContactController',
     'error' => 'ErrorController@index',
-    
+    'cart' => 'CartController@index',
     'admin' => 'Admin\DashboardController@index',
     'admin/contact' => 'Admin\ContactController',
     'admin/brands' => 'Admin\BrandController@index',
@@ -34,5 +34,7 @@ return [
     'api/categories' => 'HomeController@getCategories',
     'api/products' => 'HomeController@getProducts',
     'api/products/{id}' => 'HomeController@getProductsByCategory',
+
+    'api/cart' => 'OrderController@cart',
     
 ];

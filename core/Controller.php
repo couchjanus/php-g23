@@ -1,6 +1,6 @@
 <?php 
 require_once ROOT.'/core/Response.php';
-
+require_once ROOT.'/app/Models/User.php';
 class Controller 
 {
     protected static string $layout;

@@ -257,10 +257,12 @@ function addProductToCart(product, amount = 1){
 }
 
 function renderCartItem(item, products){
+    
     let product = products.find(product => product.id == item.id);
+    // console.log('item.id ', item.id, product.id)
     return `<tr class="cart-item" id="id${product.id}">
     <th class="p-3  border-0" scope="row">
-      <div class="d-flex align-items-center"><a class="reset-anchor d-block" href="detail.html"><img src="${product.image}" alt="${product.name}" width="70"></a>
+      <div class="d-flex align-items-center"><a class="reset-anchor d-block" href="detail.html"><img src="${product.cover}" alt="${product.name}" width="70"></a>
         <div class="ms-3"><strong class="h6"><a class="reset-anchor" href="detail.html">${product.name}</a></strong></div>
       </div>
     </th>
@@ -283,6 +285,7 @@ function renderCartItem(item, products){
   </tr>`;
 }
 function populateShoppingCart(cart, products){
+    // console.log(products)
     let res = '';
     cart.forEach(item => res+=renderCartItem(item, products));
     return res;
@@ -441,24 +444,99 @@ function buildCarousel(categories){
     document.querySelector('.carousel-track').innerHTML = result;
 }
 
+function checklogin(){
+    let cookies = document.cookie.split(';');
+    let cookieName = []
+    let cookieValue = []
+    for (let i = 0; i<cookies.length; i++){
+        cookieName[i] = cookies[i].split('=')[0].trim();
+        cookieValue[i] = cookies[i].split('=')[1].trim();
+        console.log('cookies: ', cookieName[i]);
+    }
+    if(cookieName.indexOf('ID') > -1){
+        return cookieValue[cookieName.indexOf('ID')];
+    }else return false
+
+}
+
+function getCart(){
+    return localStorage.getItem("basket")?JSON.parse(localStorage.getItem("basket")):[];
+}
+
+const clear = () => {
+    cart = [];
+    shoppingCart.innerHTML = '';
+    amountItems(cart);
+    saveCart(cart);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     amountItems(cart);
+    if(checklogin()){
+        document.querySelector('.profile').classList.add('is-logged');
+        document.querySelector('.logout').classList.add('is-logged');
+        document.querySelector('.login').classList.remove('is-logged');
+    }else{
+        document.querySelector('.profile').classList.remove('is-logged');
+        document.querySelector('.logout').classList.remove('is-logged');
+        document.querySelector('.login').classList.add('is-logged');
+    }
+    
 
     fetchResource('/api/categories')
     .then(categories=>{
         document.body.style.setProperty("--categories-length", categories.length);
-
-        if (document.querySelector('.carousel')){
-            buildCarousel(categories);
-
-            fetchResource('/api/products')
-            .then(products=>{
-                productsWrapper.innerHTML = populateProducts(products);
+        
+        fetchResource('/api/products')
+        .then(products=>{
+            // console.log(products)
+            if(productsWrapper){
+                productsWrapper.innerHTML =  populateProducts(products);
                 addToCartButton()
                 detailButton(products)
-       
-            })
+            }
+            if(shoppingCart){
+                if(checklogin()){
+                    document.querySelector('.checkout').classList.add('is-logged');
+                    document.querySelector('.checkout').addEventListener("click", () => {
+                        let inCart = [];
+                        let cart = getCart();
+                        cart.forEach(item => {
+                            inCart.push({
+                                id: item.id,
+                                amount: item.amount
+                            })
+                        })
+                        fetch("/api/cart", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body:JSON.stringify({
+                                cart: inCart
+                            })
+                        })
+                        .then(function(response){
+                            clear();
+                            document.location.replace("/profile")
+                        })
+                        .catch(function(error){
+                            console.log(error)
+                        })
+                    })
+                }else{
+                    document.querySelector('.checkout').classList.remove('is-logged');
+                   
+                }
+                shoppingCart.innerHTML = populateShoppingCart(cart, products);
+                setCartTotal(cart);
+                renderCart();
+            }
 
+        })
+        
+        if (document.querySelector('.carousel')){
+            buildCarousel(categories);
             const categoryItems = document.querySelectorAll('.category-item');
             categoryItems.forEach(item => item.addEventListener('click', function(e){
                 e.preventDefault();
@@ -511,26 +589,26 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        let selectpicker = document.querySelector('.selectpicker');
-        if(selectpicker){
+        // let selectpicker = document.querySelector('.selectpicker');
+        // if(selectpicker){
         
-            selectpicker.addEventListener('change', function() {
-                switch(this.value){
-                    case 'low-high':
-                        productsWrapper.innerHTML = populateProducts(products.sort(sorted('price', 'asc')))
-                        break;
-                    case 'high-low':
-                        productsWrapper.innerHTML = populateProducts(products.sort(sorted('price', 'desc')))
-                        break;
-                    case 'popularity':
-                        productsWrapper.innerHTML = populateProducts(products.sort(sorted('stars', 'asc')))
-                        break;
-                    default:
-                        productsWrapper.innerHTML = populateProducts(products.sort(sorted('id', 'asc')))
-                }
+        //     selectpicker.addEventListener('change', function() {
+        //         switch(this.value){
+        //             case 'low-high':
+        //                 productsWrapper.innerHTML = populateProducts(products.sort(sorted('price', 'asc')))
+        //                 break;
+        //             case 'high-low':
+        //                 productsWrapper.innerHTML = populateProducts(products.sort(sorted('price', 'desc')))
+        //                 break;
+        //             case 'popularity':
+        //                 productsWrapper.innerHTML = populateProducts(products.sort(sorted('stars', 'asc')))
+        //                 break;
+        //             default:
+        //                 productsWrapper.innerHTML = populateProducts(products.sort(sorted('id', 'asc')))
+        //         }
                 
-            })
-        }
+        //     })
+        // }
 
         // addToCartButton()
         // detailButton(products)
@@ -538,11 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         
 
-        if(shoppingCart){
-            shoppingCart.innerHTML = populateShoppingCart(cart, products);
-            setCartTotal(cart);
-            renderCart();
-        }
+        
     // end promuce
 // })
 

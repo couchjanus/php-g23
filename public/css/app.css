@@ -1420,3 +1420,10 @@ small,
     animation-play-state: paused;
 }
 
+.profile, .login, .logout, .checkout{
+    display: none;
+}
+
+.is-logged{
+    display: inline-block;
+}

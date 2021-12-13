@@ -52,6 +52,7 @@ class LoginController extends Controller
             $this->request->session()->set('userId', $this->user->id);
             $this->request->session()->set('Logged', $this->logged_in);
             setcookie($this->cookie_prefix.'ID', $this->user->id);
+            setcookie($this->cookie_prefix.'Loggrd', $this->logged_in);
             $this->response->redirect('/profile');
         }
     }
