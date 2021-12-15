@@ -1,19 +1,20 @@
 <?php
-require_once ROOT."/core/Controller.php";
-require_once ROOT."/app/Models/User.php";
-require_once ROOT."/app/Models/Role.php";
+namespace App\Controllers\Admin;
 
-class AdminController extends Controller
+use Core\Controller;
+use App\Models\{User, Role};
+use Core\AuthInterface;
+
+class AdminController extends Controller implements AuthInterface
 {
     protected static string $layout = 'admin';
 
     public function __construct(){    
         parent::__construct();
-        if(!$this->isAdmin()) $this->response->redirect('/profile');
+        if(!$this->isGranted('admin')) $this->response->redirect('/profile');
     }
 
-    protected function isAdmin()
-    {
-        return ($this->role() === 'admin') ?? false;
+    public function isGranted(string $role):bool{
+        return ($this->role() === $role) ?? false;
     }
 }

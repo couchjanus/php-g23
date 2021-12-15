@@ -1,5 +1,7 @@
 <?php 
-require_once ROOT.'/core/Connection.php';
+namespace Core;
+
+use Core\Connection;
 
 abstract class Entity 
 {

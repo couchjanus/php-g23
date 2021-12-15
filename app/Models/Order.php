@@ -1,4 +1,7 @@
 <?php 
+namespace App\Models;
+
+use Core\Entity;
 
 class Order extends Entity
 {

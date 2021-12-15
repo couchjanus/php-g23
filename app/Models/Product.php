@@ -1,5 +1,7 @@
 <?php 
+namespace App\Models;
 
+use Core\Entity;
 
 class Product extends Entity
 {

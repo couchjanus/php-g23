@@ -1,4 +1,10 @@
 <?php 
+namespace Core;
+
+use Core\Response;
+use Core\Request;
+use App\Models\User;
+
 require_once ROOT.'/core/Response.php';
 require_once ROOT.'/app/Models/User.php';
 class Controller 

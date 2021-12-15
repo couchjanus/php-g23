@@ -1,8 +1,9 @@
 <?php
+namespace App\Controllers;
 
-require_once ROOT."/app/Models/User.php";
-require_once ROOT."/app/Models/Role.php";
-require_once ROOT.'/core/Controller.php';
+use Core\Controller;
+use App\Models\{User, Role};
+
 
 class LoginController extends Controller
 {
@@ -52,7 +53,7 @@ class LoginController extends Controller
             $this->request->session()->set('userId', $this->user->id);
             $this->request->session()->set('Logged', $this->logged_in);
             setcookie($this->cookie_prefix.'ID', $this->user->id);
-            setcookie($this->cookie_prefix.'Loggrd', $this->logged_in);
+            setcookie($this->cookie_prefix.'Logged', $this->logged_in);
             $this->response->redirect('/profile');
         }
     }
@@ -60,7 +61,7 @@ class LoginController extends Controller
     public function logout(){
         if (isset($_COOKIE[$this->cookie_prefix.'ID'])){
             setcookie($this->cookie_prefix.'ID', '', time() - 3600);
-            setcookie($this->cookie_prefix.'Loggrd', '', time() - 3600);
+            setcookie($this->cookie_prefix.'Logged', '', time() - 3600);
         }
         $this->request->session()->destroy();
         $this->loggod_in = false;

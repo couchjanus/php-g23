@@ -1,8 +1,10 @@
 <?php
-require_once ROOT.'/app/Models/Category.php';
-require_once ROOT.'/app/Models/Product.php';
 
-require_once ROOT."/core/Controller.php";
+namespace App\Controllers;
+
+use Core\Controller;
+use App\Models\{Category, Product};
+
 
 class HomeController extends Controller
 {
